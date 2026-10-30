@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PaperLens - Document and Paper Analyzer</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <a class="logo" href="#" onclick="goHome(); return false;">
+          <span class="logo-icon">◈</span>
+          <span class="logo-text">PaperLens</span>
+        </a>
+        <p class="header-sub">Understand any document, fast</p>
+      </div>
+      <div class="header-nav hidden" id="headerNav">
+        <button type="button" class="header-nav-btn header-nav-outline" id="headerAskBtn" onclick="handleHeaderAsk()" title="Ask a Question">
+          <svg class="header-nav-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span class="header-nav-text">Ask a Question</span>
+        </button>
+        <button type="button" class="header-nav-btn header-nav-filled" id="headerQuizBtn" onclick="handleHeaderQuiz()" title="Take Quiz">
+          <svg class="header-nav-icon" id="headerQuizIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span class="header-nav-text" id="headerQuizBtnText">Take Quiz</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-wrap">
+
+    <!-- LANDING SECTION -->
+    <section class="landing" id="landingSection">
+
+      <div class="hero">
+        <span class="hero-badge">✦ AI-powered document analysis</span>
+        <h1 class="hero-title">Read less.<br><span class="hero-accent">Understand more.</span></h1>
+        <p class="hero-sub">
+          Upload a research paper, study notes, or any PDF. Ask questions and get answers from the document. Research papers also get a full breakdown.
+        </p>
+        <div class="hero-actions">
+          <button class="cta-btn" onclick="startAnalysis()">
+            Try PaperLens, analyze a document <span class="cta-arrow">→</span>
+          </button>
+          <p class="hero-note">Free to use · Works with PDF and arXiv links</p>
+        </div>
+      </div>
+
+      <div class="landing-block">
+        <p class="eyebrow">What you get</p>
+        <h2 class="block-title">Everything you need from a document</h2>
+        <p class="block-sub">No more skimming 20 pages to find one answer.</p>
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="feature-icon">?</div>
+            <h3>Ask anything</h3>
+            <p>Questions answered from your document itself.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">▤</div>
+            <h3>Works with any PDF</h3>
+            <p>Notes, study material, reports, or research papers.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">≡</div>
+            <h3>Paper breakdown</h3>
+            <p>Research papers get summary, methods, datasets, results and limitations.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">⚙</div>
+            <h3>Honest answers</h3>
+            <p>Says 'Not found' when the answer isn't in the document.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="landing-block">
+        <p class="eyebrow">How it works</p>
+        <h2 class="block-title">Three simple steps</h2>
+        <p class="block-sub">From paper to understanding in under a minute.</p>
+        <div class="steps">
+          <div class="step">
+            <span class="step-num">1</span>
+            <div>
+              <h3>Add your document</h3>
+              <p>Upload a PDF or paste an arXiv link.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">2</span>
+            <div>
+              <h3>Let PaperLens read it</h3>
+              <p>It finds the key parts and gets it ready.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">3</span>
+            <div>
+              <h3>Explore and ask</h3>
+              <p>Papers get a full breakdown. Any document gets Q&A.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- INPUT SECTION -->
+    <section class="input-section hidden" id="inputSection">
+
+      <button class="back-link" onclick="goHome()">← Back</button>
+
+      <div class="section-head">
+        <p class="eyebrow">Step 1 of 2</p>
+        <h2 class="block-title">Add your document</h2>
+        <p class="block-sub">Upload a PDF or paste an arXiv link — we'll take it from there.</p>
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab active" data-tab="file" onclick="switchTab('file')">Upload PDF</button>
+        <button class="tab" data-tab="link" onclick="switchTab('link')">arXiv Link</button>
+      </div>
+
+      <!-- File Upload -->
+      <div class="tab-content active" id="tab-file">
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-icon">↑</div>
+          <p class="drop-label">Drop a PDF here or <label for="fileInput" class="file-browse">browse</label></p>
+          <p class="drop-hint">PDF · Max 20MB</p>
+          <input type="file" id="fileInput" accept=".pdf" hidden />
+        </div>
+        <div class="file-preview hidden" id="filePreview">
+          <span class="file-name" id="fileName"></span>
+          <button class="clear-btn" onclick="clearFile()">✕</button>
+        </div>
+      </div>
+
+      <!-- Link Input -->
+      <div class="tab-content" id="tab-link">
+        <div class="link-input-wrap">
+          <input
+            type="text"
+            id="arxivUrl"
+            class="link-input"
+            placeholder="https://arxiv.org/abs/2301.07041  or just  2301.07041"
+          />
+        </div>
+        <p class="link-hint">Only arXiv links are supported. Other URLs will be flagged.</p>
+      </div>
+
+      <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">
+        <span id="btnText">Analyze Paper</span>
+        <span id="btnSpinner" class="spinner hidden"></span>
+      </button>
+
+      <!-- Error Banner -->
+      <div class="error-banner hidden" id="errorBanner">
+        <span class="error-icon">⚠</span>
+        <span id="errorMsg"></span>
+      </div>
+    </section>
+
+    <!-- RESULTS SECTION -->
+    <section class="results-section hidden" id="resultsSection">
+
+      <div class="paper-header">
+        <div class="paper-meta">
+          <p class="paper-source" id="paperSource"></p>
+          <h1 class="paper-title" id="paperTitle"></h1>
+          <p class="paper-authors" id="paperAuthors"></p>
+        </div>
+        <div class="header-actions">
+          <button class="download-btn" id="downloadPdfBtn" onclick="downloadPdf()">Download the Analysis</button>
+          <button class="reset-btn" onclick="resetApp()">← Analyze another</button>
+        </div>
+      </div>
+
+      <div class="abstract-box" id="abstractBox">
+        <p class="section-label">Abstract</p>
+        <p class="section-sub">The authors' own short description of the paper</p>
+        <p id="abstractText"></p>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="results-head">
+        <p class="eyebrow">Analysis</p>
+        <h2 class="block-title">The paper at a glance</h2>
+        <p class="block-sub">Key parts of the paper, broken down for quick reading.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="result-card" data-key="summary">
+          <div class="card-head">
+            <p class="card-label">Summary</p>
+            <button class="copy-btn" onclick="copyCard('res-summary', this)">Copy</button>
+          </div>
+          <p class="card-sub">The big idea in plain words</p>
+          <p class="card-body" id="res-summary">—</p>
+        </div>
+        <div class="result-card" data-key="methodology">
+          <div class="card-head">
+            <p class="card-label">Methodology</p>
+            <button class="copy-btn" onclick="copyCard('res-methodology', this)">Copy</button>
+          </div>
+          <p class="card-sub">How the work was done</p>
+          <p class="card-body" id="res-methodology">—</p>
+        </div>
+        <div class="result-card" data-key="dataset">
+          <div class="card-head">
+            <p class="card-label">Datasets Used</p>
+            <button class="copy-btn" onclick="copyCard('res-dataset', this)">Copy</button>
+          </div>
+          <p class="card-sub">What data they tested on</p>
+          <p class="card-body" id="res-dataset">—</p>
+        </div>
+        <div class="result-card" data-key="results">
+          <div class="card-head">
+            <p class="card-label">Key Results</p>
+            <button class="copy-btn" onclick="copyCard('res-results', this)">Copy</button>
+          </div>
+          <p class="card-sub">What they found</p>
+          <p class="card-body" id="res-results">—</p>
+        </div>
+        <div class="result-card" data-key="limitations">
+          <div class="card-head">
+            <p class="card-label">Limitations &amp; Future Work</p>
+            <button class="copy-btn" onclick="copyCard('res-limitations', this)">Copy</button>
+          </div>
+          <p class="card-sub">Where it falls short and what's next</p>
+          <p class="card-body" id="res-limitations">—</p>
+        </div>
+      </div>
+
+      <!-- References (collapsed by default) -->
+      <div class="references-section" id="refsSection">
+        <details class="refs-details">
+          <summary class="refs-summary">
+            <span class="section-label">Cited References</span>
+            <span class="refs-toggle">Show</span>
+          </summary>
+          <p class="section-sub">Papers and sources this work builds on</p>
+          <ul class="refs-list" id="refsList"></ul>
+        </details>
+      </div>
+
+      <!-- Q&A / CHAT -->
+      <div class="qa-section" id="ask-section">
+        <div class="qa-header-row">
+          <div class="qa-header-info">
+            <p class="section-label">Ask a question about this document</p>
+            <p class="section-sub">Curious about a detail? Ask and get an answer from the document.</p>
+          </div>
+          <button type="button" class="clear-chat-btn hidden" id="clearChatBtn" onclick="clearChat()" title="Clear chat history">Clear chat</button>
+        </div>
+
+        <!-- Chat message thread -->
+        <div class="chat-thread" id="chatThread">
+          <div class="chat-empty" id="chatEmpty">
+            <p>Ask anything about this document to start the conversation.</p>
+          </div>
+        </div>
+
+        <div class="qa-input-row">
+          <input type="text" id="qaInput" class="qa-input" placeholder="Ask anything about your document" onkeydown="handleQaKey(event)" autocomplete="off" />
+          <button class="qa-btn" id="qaBtn" onclick="askQuestion()">Ask</button>
+        </div>
+        <div class="error-banner hidden" id="qaError">
+          <span class="error-icon">⚠</span>
+          <span id="qaErrorMsg"></span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- QUIZ VIEW SECTION (Separate from Results) -->
+    <section class="quiz-view-section hidden" id="quizSection">
+
+      <div class="quiz-topbar">
+        <button type="button" class="back-link quiz-back-link" onclick="handleQuizBack()">← Back to document</button>
+        <button type="button" class="exit-quiz-btn hidden" id="exitQuizBtn" onclick="promptExitQuiz()">Exit Quiz</button>
+      </div>
+
+      <div class="quiz-section" id="quizCard">
+        <p class="section-label">Quiz</p>
+        <p class="section-sub">Test your understanding of this document with quick multiple-choice questions.</p>
+
+        <!-- Initial Start View -->
+        <div class="quiz-start-box" id="quizStartBox">
+          <div id="quizFreshStart">
+            <button class="cta-btn quiz-btn" id="startQuizBtn" onclick="startQuiz()">
+              <span id="startQuizBtnText">Start quiz</span>
+              <span class="spinner hidden" id="quizSpinner"></span>
+            </button>
+          </div>
+
+          <!-- Resume / Start Over (when saved progress exists) -->
+          <div class="quiz-resume-box hidden" id="quizResumeBox">
+            <p class="quiz-resume-meta" id="quizResumeMeta">You have an unfinished quiz in progress.</p>
+            <div class="quiz-resume-btns">
+              <button type="button" class="cta-btn quiz-btn" id="resumeQuizBtn" onclick="resumeQuiz()">
+                Resume Quiz
+              </button>
+              <button type="button" class="quiz-startover-btn" id="startOverQuizBtn" onclick="startOverQuiz()">
+                Start Over
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question View (Hidden Initially) -->
+        <div class="quiz-question-box hidden" id="quizQuestionBox">
+          <div class="quiz-header">
+            <span class="quiz-step-badge" id="quizProgress">Question 1 of 5</span>
+            <span class="quiz-score-live" id="quizLiveScore"></span>
+          </div>
+          <h3 class="quiz-question-text" id="quizQuestionText"></h3>
+          <div class="quiz-options-grid" id="quizOptionsGrid"></div>
+          <div class="quiz-explanation hidden" id="quizExplanation">
+            <p class="quiz-explanation-label">Explanation</p>
+            <p id="quizExplanationText"></p>
+          </div>
+          <div class="quiz-actions hidden" id="quizActions">
+            <button class="quiz-next-btn" id="quizNextBtn" onclick="nextQuizQuestion()">Next →</button>
+          </div>
+        </div>
+
+        <!-- Result View (Hidden Initially) -->
+        <div class="quiz-result-box hidden" id="quizResultBox">
+          <div class="quiz-result-header">
+            <span class="quiz-result-badge">Quiz Complete</span>
+            <h3 class="quiz-result-title" id="quizBatchScore">Score: 4/5</h3>
+            <p class="quiz-result-sub" id="quizRunningTotal">Running total: 4/5 correct (80%)</p>
+          </div>
+          <div class="quiz-level-card" id="quizLevelCard">
+            <p class="quiz-level-title" id="quizLevelTitle">Level</p>
+            <p class="quiz-level-desc" id="quizLevelDesc"></p>
+          </div>
+          <div class="quiz-result-actions">
+            <button class="cta-btn quiz-btn" id="moreQuestionsBtn" onclick="fetchMoreQuestions()">
+              <span id="moreQuestionsBtnText">5 more questions</span>
+              <span class="spinner hidden" id="moreQuizSpinner"></span>
+            </button>
+            <button type="button" class="back-to-doc-btn" id="quizResultBackBtn" onclick="goToDocumentView()">
+              Back to document
+            </button>
+          </div>
+        </div>
+
+        <!-- Error Banner -->
+        <div class="error-banner hidden" id="quizError">
+          <span class="error-icon">⚠</span>
+          <span id="quizErrorMsg"></span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Exit Quiz Confirmation Modal -->
+    <div class="modal-backdrop hidden" id="exitQuizModal" onclick="handleModalBackdropClick(event)">
+      <div class="modal-box">
+        <h3 class="modal-title">Exit quiz?</h3>
+        <p class="modal-desc">Your progress will be saved and you can continue later.</p>
+        <div class="modal-actions">
+          <button type="button" class="modal-btn modal-btn-secondary" onclick="closeExitModal()">Stay</button>
+          <button type="button" class="modal-btn modal-btn-primary" onclick="confirmExitQuiz()">Exit</button>
+        </div>
+      </div>
+    </div>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>PaperLens · Powered by Gemini · arXiv</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
