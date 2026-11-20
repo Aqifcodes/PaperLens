@@ -1,6 +1,5 @@
 # PaperLens — Document & Research Paper Analyzer
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Flask 3.0+](https://img.shields.io/badge/Flask-3.0%2B-green.svg)](https://flask.palletsprojects.com/)
 [![Google Gemini API](https://img.shields.io/badge/AI-Google%20Gemini%202.5%20Flash-orange.svg)](https://ai.google.dev/)
@@ -361,4 +360,4 @@ Deletes a document's cache file and memory entry. Send `{"doc_id": "..."}`. Retu
 
 ## License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+This project is shared for viewing only. See the [LICENSE](LICENSE) file for details.
