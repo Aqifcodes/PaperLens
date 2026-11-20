@@ -1,10 +1,5 @@
 # PaperLens — Document & Research Paper Analyzer
 
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Flask 3.0+](https://img.shields.io/badge/Flask-3.0%2B-green.svg)](https://flask.palletsprojects.com/)
-[![Google Gemini API](https://img.shields.io/badge/AI-Google%20Gemini%202.5%20Flash-orange.svg)](https://ai.google.dev/)
-[![Embeddings: MiniLM-L6-v2](https://img.shields.io/badge/Embeddings-all--MiniLM--L6--v2-purple.svg)](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
-
 > **Read less. Understand more.** Fast AI-powered document analysis, conversational RAG question-answering, dynamic interactive quizzes, and publication-ready PDF reporting.
 
 ---
